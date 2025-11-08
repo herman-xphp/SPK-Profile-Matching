@@ -26,7 +26,7 @@ type KriteriaCreateRequest struct {
 
 // KriteriaUpdateRequest represents kriteria update request
 type KriteriaUpdateRequest struct {
-	AspekID uint    `json:"aspek_id,string,omitempty"`
+	AspekID uint    `json:"aspek_id,omitempty"`
 	Kode    string  `json:"kode,omitempty"`
 	Nama    string  `json:"nama,omitempty"`
 	IsCore  *bool   `json:"is_core,omitempty"`

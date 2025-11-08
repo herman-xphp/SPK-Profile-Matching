@@ -26,6 +26,14 @@ func (r *KriteriaRepository) GetAll() ([]models.Kriteria, error) {
 	return list, nil
 }
 
+func (r *KriteriaRepository) GetAllWithAspek() ([]models.Kriteria, error) {
+	var list []models.Kriteria
+	if err := r.db.Preload("Aspek").Find(&list).Error; err != nil {
+		return nil, err
+	}
+	return list, nil
+}
+
 func (r *KriteriaRepository) GetByID(id uint) (*models.Kriteria, error) {
 	var k models.Kriteria
 	if err := r.db.First(&k, id).Error; err != nil {

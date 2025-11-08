@@ -72,7 +72,7 @@ const Dashboard = () => {
     <div>
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-        <p className="text-gray-500 mt-2">Sistem Pendukung Keputusan - Pabrik Gula Camming</p>
+        <p className="text-gray-500 mt-2">Sistem Pendukung Keputusan - KPSG Group</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -106,7 +106,7 @@ const Dashboard = () => {
           <CardContent>
             <p className="text-gray-600 mb-4">
               Sistem Pendukung Keputusan (SPK) ini menggunakan metode Profile Matching untuk
-              membantu dalam penempatan tenaga kerja di Pabrik Gula Camming.
+              membantu dalam penempatan tenaga kerja di KPSG Group.
             </p>
             <ul className="space-y-2 text-sm text-gray-600">
               <li className="flex items-center gap-2">

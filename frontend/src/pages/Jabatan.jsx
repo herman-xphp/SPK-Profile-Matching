@@ -81,7 +81,7 @@ const Jabatan = () => {
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Data Jabatan</h1>
-          <p className="text-gray-500 mt-1">Kelola data jabatan di pabrik</p>
+          <p className="text-gray-500 mt-1">Kelola data jabatan di KPSG Group</p>
         </div>
         {isAdmin && (
           <Dialog open={open} onOpenChange={setOpen}>

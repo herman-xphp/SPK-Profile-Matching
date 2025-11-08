@@ -85,7 +85,7 @@ func (pmc *ProfileMatchingController) GetResultByID(c *gin.Context) {
 		return
 	}
 
-	result, err := pmc.profileMatchingService.GetResultByID(uint(id64))
+	result, details, err := pmc.profileMatchingService.GetResultDetailByID(uint(id64))
 	if err != nil {
 		if err.Error() == "result not found" {
 			c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
@@ -95,8 +95,23 @@ func (pmc *ProfileMatchingController) GetResultByID(c *gin.Context) {
 		return
 	}
 
-	// Convert to DTO response
-	response := dto.MapProfileMatchResultToResponse(result)
+	// Get rank by getting all results for the same jabatan and finding the position
+	allResults, err := pmc.profileMatchingService.GetResultsByJabatanID(result.JabatanID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Could not fetch results for ranking"})
+		return
+	}
+
+	rank := 1
+	for i, r := range allResults {
+		if r.ID == result.ID {
+			rank = i + 1
+			break
+		}
+	}
+
+	// Convert to DTO response with details
+	response := dto.MapProfileMatchResultToDetailResponse(result, details, rank)
 	c.JSON(http.StatusOK, response)
 }
 

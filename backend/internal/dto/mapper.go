@@ -253,3 +253,93 @@ func MapProfileMatchResultsToRankingResponse(pmrs []models.ProfileMatchResult) [
 	return result
 }
 
+// MapProfileMatchResultToDetailResponse converts ProfileMatchResult with details to ProfileMatchResultDetailResponse
+func MapProfileMatchResultToDetailResponse(pmr *models.ProfileMatchResult, details map[string]interface{}, rank int) ProfileMatchResultDetailResponse {
+	response := ProfileMatchResultDetailResponse{
+		ID:              pmr.ID,
+		TenagaKerjaID:   pmr.TenagaKerjaID,
+		JabatanID:       pmr.JabatanID,
+		TotalScore:      pmr.TotalScore,
+		CoreFactor:      pmr.CoreFactor,
+		SecondaryFactor: pmr.SecondaryFactor,
+		Rank:            rank,
+		ScoreTotal:      pmr.TotalScore,
+		CreatedAt:       pmr.CreatedAt,
+		UpdatedAt:       pmr.UpdatedAt,
+	}
+
+	if pmr.TenagaKerja.ID != 0 {
+		tk := MapTenagaKerjaToResponse(&pmr.TenagaKerja)
+		response.TenagaKerja = &tk
+	}
+
+	if pmr.Jabatan.ID != 0 {
+		jabatan := MapJabatanToResponse(&pmr.Jabatan)
+		response.Jabatan = &jabatan
+	}
+
+	// Convert details map to DTO structure
+	detailPerhitungan := DetailPerhitungan{
+		Aspek: make(map[string]AspekDetail),
+	}
+
+	if aspekMap, ok := details["aspek"].(map[string]map[string]interface{}); ok {
+		for aspekNama, aspekData := range aspekMap {
+			aspekDetail := AspekDetail{}
+
+			if persentase, ok := aspekData["persentase"].(float64); ok {
+				aspekDetail.Persentase = persentase
+			}
+
+			if score, ok := aspekData["score"].(float64); ok {
+				aspekDetail.Score = score
+			}
+
+			if cf, ok := aspekData["cf"].(float64); ok {
+				aspekDetail.CF = cf
+			}
+
+			if sf, ok := aspekData["sf"].(float64); ok {
+				aspekDetail.SF = sf
+			}
+
+			// Convert kriteria list
+			if kriteriaList, ok := aspekData["kriteria"].([]map[string]interface{}); ok {
+				kriteriaDetails := make([]KriteriaDetail, 0, len(kriteriaList))
+				for _, k := range kriteriaList {
+					kriteriaDetail := KriteriaDetail{}
+					if kode, ok := k["kode"].(string); ok {
+						kriteriaDetail.Kode = kode
+					}
+					if nama, ok := k["nama"].(string); ok {
+						kriteriaDetail.Nama = nama
+					}
+					if target, ok := k["target"].(float64); ok {
+						kriteriaDetail.Target = target
+					}
+					if actual, ok := k["actual"].(float64); ok {
+						kriteriaDetail.Actual = actual
+					}
+					if gap, ok := k["gap"].(float64); ok {
+						kriteriaDetail.Gap = gap
+					}
+					if bobotNilai, ok := k["bobot_nilai"].(float64); ok {
+						kriteriaDetail.BobotNilai = bobotNilai
+					}
+					if isCore, ok := k["is_core"].(bool); ok {
+						kriteriaDetail.IsCore = isCore
+					}
+					kriteriaDetails = append(kriteriaDetails, kriteriaDetail)
+				}
+				aspekDetail.Kriteria = kriteriaDetails
+			}
+
+			detailPerhitungan.Aspek[aspekNama] = aspekDetail
+		}
+	}
+
+	response.Details = detailPerhitungan
+
+	return response
+}
+

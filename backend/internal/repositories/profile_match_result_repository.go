@@ -62,3 +62,6 @@ func (r *ProfileMatchResultRepository) CreateBatch(results []models.ProfileMatch
 	return r.db.Create(&results).Error
 }
 
+func (r *ProfileMatchResultRepository) DeleteByJabatanID(jabatanID uint) error {
+	return r.db.Where("jabatan_id = ?", jabatanID).Delete(&models.ProfileMatchResult{}).Error
+}
