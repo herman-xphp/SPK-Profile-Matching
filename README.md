@@ -2,6 +2,8 @@
 
 Sistem Pendukung Keputusan (SPK) untuk Profile Matching menggunakan metode Profile Matching untuk menentukan ranking tenaga kerja berdasarkan kesesuaian dengan profil jabatan.
 
+**Repository**: [https://github.com/herman-xphp/spk-profile-matching](https://github.com/herman-xphp/spk-profile-matching)
+
 ## 📋 Daftar Isi
 
 - [Fitur](#-fitur)
@@ -77,10 +79,10 @@ Sebelum memulai, pastikan Anda telah menginstall:
 
 ```bash
 # Clone repository
-git clone https://github.com/username/SPK-Profile-Matching.git
+git clone https://github.com/herman-xphp/spk-profile-matching.git
 
 # Masuk ke direktori project
-cd SPK-Profile-Matching
+cd spk-profile-matching
 ```
 
 ### Metode 2: Download ZIP
@@ -447,7 +449,7 @@ yarn install
 
 Jika mengalami masalah, silakan:
 1. Cek bagian [Troubleshooting](#-troubleshooting)
-2. Buka issue di GitHub repository
+2. Buka issue di [GitHub repository](https://github.com/herman-xphp/spk-profile-matching)
 3. Hubungi tim development
 
 ## 📄 License
